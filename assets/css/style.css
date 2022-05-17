@@ -1,0 +1,125 @@
+*,body{
+    margin: 0;
+}
+.header-section{
+    background-color: #F2EFEF;
+    text-align: center;
+    padding: 20px;
+}
+.header-section h2{
+    margin: 10px auto;
+    font-size: 35px;
+    color: #F2A93B;
+    letter-spacing: 2px;
+}
+.header-section p{
+    font-weight: bold;
+    color: #222;
+}
+.input-section{
+    padding: 20px;
+}
+.input-section .input-box{
+    text-align: center;
+    margin: 20px auto;
+}
+.input-section .input-box input{
+    width: 50%;
+    height: 30px;
+    border-radius: 20px;
+    border-top: none;
+    border-left: none;
+    border: 2px solid #d3d1d1;
+    padding-left: 20px;
+    color: #F2A93B;
+    outline: none;
+    font-weight: bold;
+}
+.input-section .button-box{
+    text-align: center;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+.input-section .button-box button{
+    width: 150px;
+    height: 100%;
+    border-radius: 20px;
+    margin-right: 10px;
+    border: transparent;
+    background-color: #F2A93B;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+}
+.input-section .button-box #chart-btn{
+    font-size: 30px;
+    width: auto;
+    height: 100%;
+    background-color: transparent;
+    color: #F2A93B;
+    font-weight: bold;
+}
+.output-countries-section{
+    background-color: #F2EFEF;
+    display: grid;
+    grid-template-columns: 16vw 16vw 16vw 16vw 16vw;
+    justify-content: space-evenly;
+    overflow-x: hidden;
+}
+.output-countries-section .country{
+    background-color: #fff;
+    padding: 10px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.output-countries-section .country div{
+    width: 90%;
+    height: 100px;
+    margin: 10px auto;
+    text-align: center;
+}
+.output-countries-section .country div img{
+    width: 100%;
+    height: 100%;
+}
+.output-countries-section .country h5{
+    font-size: 16px;
+}
+.output-countries-section .country .name{
+    text-align: center;
+    font-size: 20px;
+    margin: 10px auto;
+    color: #F2A93B;
+}
+/***chart***/
+.output-chart-section h2{
+    text-align: center;
+    color: #F2A93B;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.chart-section{
+    padding-top: 50px;
+    background-color: #F2EFEF;
+}
+
+.chart-section .country{
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+.chart-section .graph{
+    width: 500px;
+    height: 33px;
+}
+.chart-section .name,.chart-section .population{
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: left;
+    justify-content: left;
+    width: 120px;
+    margin: 5px auto;
+}

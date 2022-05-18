@@ -1,10 +1,19 @@
 const countriesSection=document.querySelector('.output-countries-section');
 const input=document.querySelector('.input');
 const chartSection=document.querySelector('.chart-section');
+const nameBtn=document.getElementById('name-btn');
+const capitalBtn=document.getElementById('capital-btn');
+const populationBtn=document.getElementById('population-btn');
+const nameBtnIcon=document.getElementById('namebtn-icon');
+const capitalBtnIcon=document.getElementById('capitalbtn-icon');
+const populationBtnIcon=document.getElementById('populationbtn-icon');
+const clearBtn=document.getElementById('clear-btn');
+
 
 const url='https://restcountries.com/v3.1/all';
 
 let countries;
+let countriesArr;
 const tenCountries=[];
 const fetchData= async ()=>{
     try{
@@ -20,6 +29,97 @@ const fetchData= async ()=>{
         }
         showFunction(countries);
         topTenCountries(tenCountries);
+        nameBtn.addEventListener('click',e=>{
+
+            let arr,multiArr;
+            if(countriesArr){
+                arr=countriesArr;
+            }else{
+                arr=countries;
+            }
+            const sortedArr=arr.sort((a,b)=>{
+                if(a.name.common>b.name.common) return 1;
+                else return -1;
+            });
+            if(!nameBtnIcon.className){
+                multiArr=sortedArr.sort();
+                nameBtnIcon.className='fa-solid fa-arrow-down-long';
+            }else{
+                if(nameBtnIcon.className=='fa-solid fa-arrow-down-long'){
+                    multiArr=sortedArr.reverse();
+                    nameBtnIcon.className='fa-solid fa-arrow-up-long';
+                }else{
+                    multiArr=sortedArr.sort();
+                    nameBtnIcon.className='fa-solid fa-arrow-down-long';
+                }               
+            }
+            removeCountriesOutput();
+            showFunction(multiArr);
+            capitalBtnIcon.className='';
+            populationBtnIcon.className='';
+        });
+        capitalBtn.addEventListener('click',e=>{
+            let arr,multiArr;
+            if(countriesArr){
+                arr=countriesArr;
+            }else{
+                arr=countries;
+            }
+            const sortedArr=arr.sort((a,b)=>{
+                if(!a.capital){
+                    return 1;
+                }else{
+                    if(a.capital>b.capital) return 1;
+                    else return -1;
+                }
+            });
+            if(!capitalBtnIcon.className){
+                multiArr=sortedArr.sort();
+                capitalBtnIcon.className='fa-solid fa-arrow-down-long';
+            }else{
+                if(capitalBtnIcon.className=='fa-solid fa-arrow-down-long'){
+                    multiArr=sortedArr.reverse();
+                    capitalBtnIcon.className='fa-solid fa-arrow-up-long';
+                }else{
+                    multiArr=sortedArr.sort();
+                    capitalBtnIcon.className='fa-solid fa-arrow-down-long';
+                }
+                
+            }
+            removeCountriesOutput();
+            showFunction(multiArr);
+            nameBtnIcon.className='';
+            populationBtnIcon.className='';
+        })
+        populationBtn.addEventListener('click',e=>{
+
+            let arr,multiArr;
+            if(countriesArr){
+                arr=countriesArr;
+            }else{
+                arr=countries;
+            }
+            const sortedArr=arr.sort((a,b)=>{
+                if(a.population>b.population) return 1;
+                else return -1;
+            });
+            if(!populationBtnIcon.className){
+                multiArr=sortedArr.sort();
+                populationBtnIcon.className='fa-solid fa-arrow-down-long';
+            }else{
+                if(populationBtnIcon.className=='fa-solid fa-arrow-down-long'){
+                    multiArr=sortedArr.reverse();
+                    populationBtnIcon.className='fa-solid fa-arrow-up-long';
+                }else{
+                    multiArr=sortedArr.sort();
+                    populationBtnIcon.className='fa-solid fa-arrow-down-long';
+                }               
+            }
+            removeCountriesOutput
+            showFunction(multiArr);
+            capitalBtnIcon.className='';
+            nameBtnIcon.className='';
+        });
     }catch(err){
         console.log(err);
     }
@@ -29,11 +129,27 @@ fetchData()
     input.addEventListener('keyup',e=>{
         removeAllCild();
         const value=input.value;
-        const countriesArr=countries.filter(c=> c.name.common.toLowerCase().includes(value.toLowerCase()));
+        if(value){
+            clearBtn.style.display='block';
+        }else{
+            clearBtn.style.display='none';
+        }
+        countriesArr=countries.filter(c=> c.name.common.toLowerCase().includes(value.toLowerCase()));
         showFunction(countriesArr);
         topTenCountries(countriesArr);
     })
 )
+.then(
+    clearBtn.addEventListener('click',e=>{
+        removeAllCild();
+        showFunction(countries);
+        topTenCountries(tenCountries);
+        input.value='';
+        clearBtn.style.display='none';
+        countriesArr=null;
+    })
+)
+
 function showFunction(countries){
     for(let c of countries){
         let country=document.createElement('div');
@@ -74,7 +190,6 @@ function showFunction(countries){
     }
 }
 function topTenCountries(ctys){
-    console.log(ctys);
     let worldPopulation=0;
     for(let c of countries){
         worldPopulation+=c.population;
@@ -121,7 +236,6 @@ function topTenCountries(ctys){
         graph.className='graph';
         const graphFill=document.createElement('div');
         const per=population/worldPopulation*100;
-        console.log(per);
         graphFill.style.backgroundColor='#F2A93B';
         graphFill.style.width=`${per}%`;
         graphFill.style.height='100%';
@@ -138,5 +252,10 @@ function removeAllCild(){
     }
     while(chartSection.firstChild){
         chartSection.removeChild(chartSection.firstChild);
+    }
+}
+function removeCountriesOutput(){
+    while(countriesSection.firstChild){
+        countriesSection.removeChild(countriesSection.firstChild);
     }
 }

@@ -100,8 +100,8 @@ const fetchData= async ()=>{
                 arr=countries;
             }
             const sortedArr=arr.sort((a,b)=>{
-                if(a.population>b.population) return 1;
-                else return -1;
+                if(a.population>b.population) return -1;
+                else return 1;
             });
             if(!populationBtnIcon.className){
                 multiArr=sortedArr.sort();
@@ -115,7 +115,7 @@ const fetchData= async ()=>{
                     populationBtnIcon.className='fa-solid fa-arrow-down-long';
                 }               
             }
-            removeCountriesOutput
+            removeCountriesOutput();
             showFunction(multiArr);
             capitalBtnIcon.className='';
             nameBtnIcon.className='';
@@ -125,6 +125,9 @@ const fetchData= async ()=>{
     }
 }
 fetchData()
+.then(function(){
+    document.querySelector('.spinner-wrapper').style.display='none'
+})
 .then(
     input.addEventListener('keyup',e=>{
         removeAllCild();
@@ -149,14 +152,15 @@ fetchData()
         countriesArr=null;
     })
 )
-
 function showFunction(countries){
     for(let c of countries){
         let country=document.createElement('div');
         country.className='country';
         let imgBox=document.createElement('div');
         let countryImg=document.createElement('img');
-        countryImg.src=c.flags.png;
+        if(c.flags){
+            countryImg.src=c.flags.png;
+        }
         imgBox.appendChild(countryImg);
         country.appendChild(imgBox);
         let name=document.createElement('h5');
@@ -259,3 +263,18 @@ function removeCountriesOutput(){
         countriesSection.removeChild(countriesSection.firstChild);
     }
 }
+//scroll top function
+const mybutton=document.getElementById('scrollTop-btn');
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }

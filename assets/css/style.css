@@ -1,5 +1,22 @@
 *,body{
     margin: 0;
+    padding: 0;
+    overflow: initial !important;
+}
+html{
+    scroll-behavior: smooth;
+}
+#scrollTop-btn{
+    position: fixed;
+    font-size: 30px;
+    bottom: 20px;
+    right: 30px;
+    background-color: transparent;
+    outline: none;
+    border: transparent;
+    color: #F2A93B;
+    display: none;
+    cursor: pointer;
 }
 .header-section{
     background-color: #F2EFEF;
@@ -81,12 +98,13 @@
 .output-countries-section{
     background-color: #F2EFEF;
     display: grid;
-    grid-template-columns: 15vw 15vw 15vw 15vw 15vw;
+    grid-template-columns: 16vw 16vw 16vw 16vw 16vw;
     justify-content: space-evenly;
     overflow-x: hidden;
+    padding-top: 50px;
 }
 .output-countries-section .country{
-    background-color: #fff;
+    background-color: #fafafa;
     padding: 10px 20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -110,6 +128,9 @@
     margin: 10px auto;
     color: #F2A93B;
 }
+.output-countries-section .country .language{
+    word-wrap:break-word;
+}
 /***chart***/
 .output-chart-section h2{
     text-align: center;
@@ -119,7 +140,8 @@
 }
 .chart-section{
     padding-top: 50px;
-    background-color: #F2EFEF;
+    background-color: #eee;
+
 }
 
 .chart-section .country{
@@ -133,9 +155,139 @@
 }
 .chart-section .name,.chart-section .population{
     font-size: 20px;
-    margin-top: 20px;
     text-align: left;
     justify-content: left;
     width: 120px;
     margin: 5px auto;
 }
+/**loading***/
+.spinner-wrapper{
+    width: 100%;
+    height: 400px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: hidden;
+}
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #151515;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: auto auto;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /***responsive***/
+  @media(max-width:1100px){
+    .output-countries-section{
+        grid-template-columns: 20vw 20vw 20vw 20vw;
+    }
+    .output-countries-section .country{
+        padding: 8px 10px;
+    }
+  }
+  @media(max-width:899px){
+    .output-countries-section{
+        grid-template-columns: 30vw 30vw 30vw;
+    }
+    .output-countries-section .country{
+        padding: 5px 10px;
+    }
+    .output-countries-section .country div{
+        width: 75%;
+    }
+    .chart-section .graph{
+        width:370px;
+        height: 30px;
+    }
+  }
+  @media(max-width:699px){
+    .output-countries-section{
+        grid-template-columns: 40vw 40vw;
+    }
+    .output-countries-section .country{
+        padding: 4px 8px;
+    }
+    .output-countries-section .country div{
+        width: min(34vw,160px);
+    }
+    .chart-section .graph{
+        width:min(300px,40%);
+        height: 28px;
+    }
+    .chart-section .name,.chart-section .population{
+        font-size: 17px;
+        font-weight: bold;
+        width: 20%;
+    }
+  }
+  @media(max-width:399px){
+      .input-section .input-box{
+          width: 70%;
+      }
+      .input-section .input-box input{
+          padding-left: 5px;
+      }
+    .input-section .button-box{
+        display: grid;
+        grid-template-columns: 35vw 35vw;
+        justify-content: space-around;
+        height: auto;
+    }
+    .input-section .button-box button{
+        margin: 10px auto;
+        width: 100%;
+        height: 30px;
+        font-size: 11px;
+    }
+    .input-section .button-box #chart-btn{
+        font-size: 23px;
+        margin-top: 0;
+    }
+    .output-countries-section{
+        grid-template-columns: 90vw;
+    }
+    .output-countries-section .country{
+        padding: 8px 8px;
+    }
+    .output-countries-section .country div{
+        width: min(80vw,180px);
+    }
+    .output-chart-section h2{
+        font-size: 18px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .chart-section{
+        padding-top: 30px;
+    }
+    .chart-section .country{
+        margin: 10px auto;
+    }
+    .chart-section .graph{
+        width:min(100px,30%);
+        height: 22px;
+    }
+    .chart-section .name,.chart-section .population{
+        font-size: 12px;
+        font-weight: bold;
+        width: 15%;
+    }
+    .chart-section .name{
+        margin-left: 10px;
+    }
+  }

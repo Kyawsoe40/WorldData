@@ -2,10 +2,10 @@ const countriesSection=document.querySelector('.output-countries-section');
 const input=document.querySelector('.input');
 const chartSection=document.querySelector('.chart-section');
 const nameBtn=document.getElementById('name-btn');
-const capitalBtn=document.getElementById('capital-btn');
+const areaBtn=document.getElementById('area-btn');
 const populationBtn=document.getElementById('population-btn');
 const nameBtnIcon=document.getElementById('namebtn-icon');
-const capitalBtnIcon=document.getElementById('capitalbtn-icon');
+const areaBtnIcon=document.getElementById('areabtn-icon');
 const populationBtnIcon=document.getElementById('populationbtn-icon');
 const clearBtn=document.getElementById('clear-btn');
 
@@ -19,6 +19,7 @@ const fetchData= async ()=>{
     try{
         const response=await fetch(url);
         countries=await response.json();
+        console.log(countries);
         let sortedcountries=await countries.sort((a,b)=>{
             if(a.population>b.population) return -1;
             else if(a.population<b.population) return 1;
@@ -55,10 +56,10 @@ const fetchData= async ()=>{
             }
             removeCountriesOutput();
             showFunction(multiArr);
-            capitalBtnIcon.className='';
+            areaBtnIcon.className='';
             populationBtnIcon.className='';
         });
-        capitalBtn.addEventListener('click',e=>{
+        areaBtn.addEventListener('click',e=>{
             let arr,multiArr;
             if(countriesArr){
                 arr=countriesArr;
@@ -66,23 +67,23 @@ const fetchData= async ()=>{
                 arr=countries;
             }
             const sortedArr=arr.sort((a,b)=>{
-                if(!a.capital){
+                if(!a.area){
                     return 1;
                 }else{
-                    if(a.capital>b.capital) return 1;
-                    else return -1;
+                    if(a.area>b.area) return -1;
+                    else return 1;
                 }
             });
-            if(!capitalBtnIcon.className){
+            if(!areaBtnIcon.className){
                 multiArr=sortedArr.sort();
-                capitalBtnIcon.className='fa-solid fa-arrow-down-long';
+                areaBtnIcon.className='fa-solid fa-arrow-down-long';
             }else{
-                if(capitalBtnIcon.className=='fa-solid fa-arrow-down-long'){
+                if(areaBtnIcon.className=='fa-solid fa-arrow-down-long'){
                     multiArr=sortedArr.reverse();
-                    capitalBtnIcon.className='fa-solid fa-arrow-up-long';
+                    areaBtnIcon.className='fa-solid fa-arrow-up-long';
                 }else{
                     multiArr=sortedArr.sort();
-                    capitalBtnIcon.className='fa-solid fa-arrow-down-long';
+                    areaBtnIcon.className='fa-solid fa-arrow-down-long';
                 }
                 
             }
@@ -117,7 +118,7 @@ const fetchData= async ()=>{
             }
             removeCountriesOutput();
             showFunction(multiArr);
-            capitalBtnIcon.className='';
+            areaBtnIcon.className='';
             nameBtnIcon.className='';
         });
     }catch(err){
@@ -126,7 +127,8 @@ const fetchData= async ()=>{
 }
 fetchData()
 .then(function(){
-    document.querySelector('.spinner-wrapper').style.display='none'
+    document.querySelector('.spinner-wrapper').style.display='none';
+    document.querySelector('.output-chart-section').style.display='block';
 })
 .then(
     input.addEventListener('keyup',e=>{
@@ -187,11 +189,38 @@ function showFunction(countries){
             }
         }
         let population=document.createElement('h5');
-        population.textContent='Population : '+c.population;
+        let populationValue=numberWithCommas(c.population)
+        population.textContent='Population : '+populationValue;
         population.className='population';
         country.appendChild(population);
+        let area=document.createElement('h5');
+        let areaValue=numberWithCommas(c.area);
+        area.textContent='Area : '+ areaValue;
+        area.className='area';
+        country.appendChild(area);
+        let region=document.createElement('h5');
+        region.textContent='Region : '+c.region;
+        region.className='region';
+        country.appendChild(region);
+        if(c.currencies){
+            let currencies=document.createElement('h5');
+            let cur=Object.values(c.currencies);
+            if(cur.length>1){
+                let currency=[];
+                for(let i of cur){
+                    currency.push(i.symbol);
+                }
+                currencies.textContent='Currency : '+currency.join(' , ');
+            }else{
+                currencies.textContent='Currency : '+cur[0].symbol;
+            }
+            country.appendChild(currencies);
+        }
         countriesSection.appendChild(country);
     }
+}
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 function topTenCountries(ctys){
     let worldPopulation=0;
@@ -263,12 +292,13 @@ function removeCountriesOutput(){
         countriesSection.removeChild(countriesSection.firstChild);
     }
 }
+
 //scroll top function
 const mybutton=document.getElementById('scrollTop-btn');
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
     mybutton.style.display = "block";
   } else {
     mybutton.style.display = "none";
